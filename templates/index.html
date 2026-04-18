@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turing Machine - Palindrome Recognizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖥️ Turing Machine Simulator</h1>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="form-group">
+                    <label for="languageSelect">Select Language:</label>
+                    <select id="languageSelect" onchange="handleLanguageChange()">
+                        <option value="palindrome">Palindrome (w == w^R)</option>
+                        <option value="even_1s">Even number of 1s</option>
+                        <option value="an_bn">a^n b^n (Equal a's and b's)</option>
+                        <option value="an_bn_cn">a^n b^n c^n</option>
+                        <option value="equal_01">Equal number of 0s and 1s</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <label for="inputString" id="inputStringLabel">Enter a string (use only 'a' and 'b'):</label>
+                    <input 
+                        type="text" 
+                        id="inputString" 
+                        placeholder="e.g., aba, abba, aabbaa"
+                        maxlength="20"
+                    >
+                    <button id="runButton" onclick="runSimulation()">Run Simulation</button>
+                    <button id="clearButton" onclick="clearAll()">Clear</button>
+                </div>
+            </section>
+
+            <!-- Result Section -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <div class="result-box">
+                    <h2>Result</h2>
+                    <div class="result-display" id="resultDisplay"></div>
+                </div>
+            </section>
+
+            <!-- Tape Animation Section -->
+            <section class="tape-section" id="tapeSection" style="display: none;">
+                <h2>Live Tape Animation</h2>
+                <div class="tape-controls">
+                    <span class="state-display">
+                        State: <strong id="currentState">q0</strong>
+                    </span>
+                    <span class="position-display">
+                        Head Position: <strong id="currentPosition">0</strong>
+                    </span>
+                    <span class="step-display">
+                        Step: <strong id="currentStep">0</strong> / <span id="totalSteps">0</span>
+                    </span>
+                </div>
+                <div class="tape-container">
+                    <div class="tape-wrapper">
+                        <div class="tape" id="tapeDisplay"></div>
+                        <div class="head-pointer" id="headPointer" style="left: 0px;"></div>
+                    </div>
+                </div>
+                <div class="animation-controls">
+                    <button id="pauseButton" onclick="togglePauseAnimation()" style="display: none;">Pause</button>
+                    <button id="resumeButton" onclick="resumeAnimation()" style="display: none;">Resume</button>
+                    <button id="stopButton" onclick="stopAnimation()" style="display: none;">Stop</button>
+                </div>
+            </section>
+
+            <!-- Step Log Section (Optional - togglable) -->
+            <section class="step-log-section" id="stepLogSection" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 style="margin: 0;">Live Step Log</h2>
+                    <button onclick="toggleStepLog()" id="toggleLogBtn" style="background: #95a5a6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 600;">Show Log</button>
+                </div>
+                <div class="step-log" id="stepLog" style="display: none;"></div>
+            </section>
+
+            <!-- Steps Section -->
+            <section class="steps-section" id="stepsSection" style="display: none;">
+                <h2>Execution Steps</h2>
+                <div class="steps-controls">
+                    <button onclick="toggleAllSteps()">Toggle All Steps</button>
+                    <button onclick="scrollToStep(0)">First</button>
+                    <button onclick="scrollToStep(-1)">Last</button>
+                </div>
+                <div class="steps-container" id="stepsContainer"></div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="info-section">
+                <h3>Machine Information</h3>
+                <div id="infoContainer" class="info-grid">
+                    <div class="info-item" style="grid-column: span 2;">
+                        <strong>Description:</strong> <span id="machineDescription"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Alphabet:</strong> <span id="alphabet">a, b</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>States:</strong> <span id="states"></span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Start State:</strong> <span>q0</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Accept State:</strong> <span id="acceptState"></span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Language Recognition using Turing Machine | Built with Flask + JavaScript</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
